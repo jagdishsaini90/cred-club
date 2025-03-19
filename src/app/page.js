@@ -3,6 +3,7 @@ import Canvas from "@/components/canvas";
 import FAQ from "@/components/faq";
 import Footer from "@/components/footer";
 import Hero from "@/components/hero";
+import Loader from "@/components/loader";
 import Navbar from "@/components/navbar";
 import Phonestack from "@/components/phonestack";
 import Video from "@/components/video";
@@ -10,6 +11,14 @@ import useLoadImages from "@/hooks/useloadImages";
 
 export default function Home() {
   const { handsImage, ssImage, untitledImage } = useLoadImages();
+
+  if (
+    handsImage.length === 0 ||
+    ssImage.length === 0 ||
+    untitledImage.length === 0
+  ) {
+    return <Loader />;
+  }
 
   return (
     <div>
