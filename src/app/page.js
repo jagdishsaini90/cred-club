@@ -13,9 +13,9 @@ export default function Home() {
   const { handsImage, ssImage, untitledImage } = useLoadImages();
 
   if (
-    handsImage.length === 0 ||
-    ssImage.length === 0 ||
-    untitledImage.length === 0
+    handsImage.length !== 338 ||
+    ssImage.length !== 194 ||
+    untitledImage.length !== 149
   ) {
     return <Loader />;
   }

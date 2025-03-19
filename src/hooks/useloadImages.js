@@ -8,7 +8,7 @@ const URL_3 = `https://web-images.credcdn.in/v2/_next/assets/images/cards/tablet
 
 export default function useLoadImages(
   limit1 = 338,
-  limit2 = 195,
+  limit2 = 194,
   limit3 = 149
 ) {
   const [handsImage, setHandsImage] = useState([]);
