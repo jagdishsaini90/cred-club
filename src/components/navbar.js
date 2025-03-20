@@ -1,6 +1,8 @@
 import React from "react";
 
-const Navbar = () => {
+const Navbar = ({ setMenuOpen, menuOpen }) => {
+  console.log(menuOpen);
+
   return (
     <div
       id="navbar-wrapper"
@@ -49,13 +51,26 @@ const Navbar = () => {
       <div
         id="toggle-container-desktop"
         className="flex ml-[20px] justify-center items-center border border-white/20 cursor-pointer"
+        onClick={() => setMenuOpen(!menuOpen)}
       >
         <div className="flex justify-center items-center border-r border-l border-white/20 w-20 h-20 p-2">
-          <a className="flex flex-col justify-between h-[22px] w-[22px]">
-            <span className="h-[2px] w-full opacity-100 transition-all duration-700 ease-in-out bg-white"></span>
-            <span className="h-[2px] w-full opacity-100 transition-all duration-700 ease-in-out bg-white"></span>
-            <span className="h-[2px] w-full opacity-100 transition-all duration-700 ease-in-out bg-white"></span>
-          </a>
+          <div className="flex flex-col justify-between h-[22px] w-[22px] relative">
+            <span
+              className={`h-[2px] w-full bg-white absolute top-0 left-0 transition-all duration-300 ease-in-out ${
+                menuOpen ? "rotate-45 top-[10px]" : ""
+              }`}
+            />
+            <span
+              className={`h-[2px] w-full bg-white absolute top-[10px] left-0 transition-all duration-300 ease-in-out ${
+                menuOpen ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`h-[2px] w-full bg-white absolute bottom-0 left-0 transition-all duration-300 ease-in-out ${
+                menuOpen ? "-rotate-45 bottom-[10px]" : ""
+              }`}
+            />
+          </div>
         </div>
       </div>
     </div>
