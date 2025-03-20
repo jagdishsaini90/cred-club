@@ -1,10 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const URL_1 = `https://web-images.credcdn.in/v2/_next/assets/images/cards/desktop/perks/seq_v2/perks-`;
 const URL_2 = `https://web-images.credcdn.in/v2/_next/assets/images/cards/tablet/smart-statements/ss_seq/ss-`;
 const URL_3 = `https://web-images.credcdn.in/v2/_next/assets/images/cards/tablet/unbilled/seq_v3/unbilled-`;
+
+const preloadImage = (src) =>
+  new Promise((resolve) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => resolve(src);
+    img.onerror = () => resolve(null);
+  });
 
 export default function useLoadImages(
   limit1 = 338,
@@ -15,41 +23,43 @@ export default function useLoadImages(
   const [ssImage, setSSImage] = useState([]);
   const [untitledImage, setUntitledImage] = useState([]);
 
+  const loadedRef = useRef({ hands: false, ss: false, untitled: false });
+
   useEffect(() => {
-    const loadImages = () => {
-      if (handsImage.length === 0) {
-        const loadedHandsImages = [];
-        for (let i = 0; i < limit1; i++) {
-          const img = new Image();
-          img.src = `${URL_1}${i}.jpg?tr=orig`;
-          loadedHandsImages[i] = img.src;
-        }
-        setHandsImage(loadedHandsImages);
+    const loadImages = async () => {
+      if (!loadedRef.current.hands) {
+        const hands = await Promise.all(
+          Array.from({ length: limit1 }, (_, i) =>
+            preloadImage(`${URL_1}${i}.jpg?tr=orig`)
+          )
+        );
+        setHandsImage(hands.filter(Boolean));
+        loadedRef.current.hands = true;
       }
 
-      if (ssImage.length === 0) {
-        const loadedSSImages = [];
-        for (let i = 0; i < limit2; i++) {
-          const img = new Image();
-          img.src = `${URL_2}${i}.jpg?tr=orig`;
-          loadedSSImages[i] = img.src;
-        }
-        setSSImage(loadedSSImages);
+      if (!loadedRef.current.ss) {
+        const ss = await Promise.all(
+          Array.from({ length: limit2 }, (_, i) =>
+            preloadImage(`${URL_2}${i}.jpg?tr=orig`)
+          )
+        );
+        setSSImage(ss.filter(Boolean));
+        loadedRef.current.ss = true;
       }
 
-      if (untitledImage.length === 0) {
-        const loadedUntitledImages = [];
-        for (let i = 0; i < limit3; i++) {
-          const img = new Image();
-          img.src = `${URL_3}${i}.jpg?tr=orig`;
-          loadedUntitledImages[i] = img.src;
-        }
-        setUntitledImage(loadedUntitledImages);
+      if (!loadedRef.current.untitled) {
+        const untitled = await Promise.all(
+          Array.from({ length: limit3 }, (_, i) =>
+            preloadImage(`${URL_3}${i}.jpg?tr=orig`)
+          )
+        );
+        setUntitledImage(untitled.filter(Boolean));
+        loadedRef.current.untitled = true;
       }
     };
 
     loadImages();
-  }, [handsImage, ssImage, untitledImage, limit1, limit2, limit3]);
+  }, [limit1, limit2, limit3]);
 
   return { handsImage, ssImage, untitledImage };
 }
