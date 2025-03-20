@@ -14,7 +14,7 @@ const Video = ({ poster, src }) => {
       if (entry.isIntersecting && !hasScrolled.current) {
         hasScrolled.current = true;
         document.body.style.overflow = "hidden";
-
+        video.play();
         section.scrollIntoView({
           behavior: "smooth",
           block: "start",
@@ -46,7 +46,6 @@ const Video = ({ poster, src }) => {
       <video
         ref={videoRef}
         playsInline
-        autoPlay
         muted
         loop={false}
         preload="metadata"
