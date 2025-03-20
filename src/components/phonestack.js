@@ -7,7 +7,7 @@ const Phonestack = () => {
     <div className="relative w-screen min-h-screen bg-white p-[125px] flex flex-col items-start justify-center text-center">
       <div className="absolute top-[-70vh] h-[3px] bg-red-500 z-20" />
 
-      <h1 className="font-[denton] text-black text-[67px] font-extrabold tracking-[-0.3px] leading-[65px] text-left">
+      <h1 className=" text-black text-[67px] font-extrabold tracking-[-0.3px] leading-[65px] text-left">
         every touch is <br /> pure power.
       </h1>
 

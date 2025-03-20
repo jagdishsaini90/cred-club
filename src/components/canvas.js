@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
-const Canvas = ({ height, limit, imageList = [] }) => {
+const Canvas = ({ limit, imageList = [] }) => {
   const [imgId, setImgId] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const scrollContainerRef = useRef(null);
@@ -47,9 +47,11 @@ const Canvas = ({ height, limit, imageList = [] }) => {
 
   if (imageList.length === 0) return null;
 
+  console.log(imgId);
+
   return (
     <div ref={scrollContainerRef} className="relative">
-      <div className={`relative w-full h-[${height}]`}>
+      <div className={`relative w-full h-[600vh]`}>
         <div className="sticky top-0 left-0 h-screen">
           <div className="absolute top-0 right-0 w-full h-full flex justify-center items-start pointer-events-none overflow-hidden">
             <Image
